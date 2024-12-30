@@ -1,0 +1,26 @@
+.strip-animate {
+    animation: infiniteScroll 10s linear infinite;
+}
+@keyframes infiniteScroll {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translate(-50%);
+  }
+}
+
+.strip-animate-reverse {
+    animation: infiniteScrollReverse 10s linear infinite;
+}
+@keyframes infiniteScrollReverse {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translate(50%);
+  }
+}
+

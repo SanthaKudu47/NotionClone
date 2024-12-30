@@ -1,0 +1,12 @@
+.scroll-animate {
+    animation: infiniteScroll 10s linear infinite;
+}
+@keyframes infiniteScroll {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translate(-50%);
+  }
+}

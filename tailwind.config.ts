@@ -68,6 +68,21 @@ export default {
         "brand/brand-primary-purple": "#7000ff",
         "brand/brand-dark": "#030014",
       },
+
+      fontSize: {
+        "2xs": "1rem",
+        xs: "1.125rem",
+        sm: "1.5625rem",
+        base: "1.625rem",
+        lg: "2.1875rem",
+        xl: "2.8125rem",
+        "2xl": "3.4375rem",
+        "3xl": "4.0625rem",
+      },
+
+      fontFamily: {
+        "dm-sans": "DM Sans",
+      },
     },
   },
   plugins: [],
