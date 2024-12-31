@@ -84,20 +84,23 @@ export default async function Home() {
             organized manner.
           </div>
         </Container>
-        <div className="py-2 w-full flex flex-row justify-end sm:justify-center h-[450px]">
-          <div className="h-full w-[360px] flex sm:hidden flex-row justify-end">
+        <div className="py-2 w-full flex flex-row justify-end sm:justify-center h-[450px] relative">
+          <div className="h-full w-[360px] flex sm:hidden flex-row justify-end z-10">
             <Image
               src={calenderMobile}
               alt="calender_mobile_pic"
               className="object-contain"
             />
           </div>
-          <div className="hidden h-full w-[1000px]  sm:flex flex-row justify-center">
+          <div className="hidden h-full w-[1000px]  sm:flex flex-row justify-center z-10">
             <Image
               src={calenderDesktop}
               alt="calender_mobile_pic"
               className="object-contain"
             />
+          </div>
+          <div className="flex flex-row justify-end sm:justify-center items-center w-full absolute bottom-0 z-0">
+            <div className="absolute flex w-[400px] h-[30px] sm:w-[550px]  bottom-6 sm:bottom-0 sm:h-[60px] bg-[#0469FF] opacity-80 rounded-full blur-3xl z-0"/>
           </div>
         </div>
         <Container>
@@ -136,17 +139,16 @@ export default async function Home() {
           </div>
         </Container>
         <Container>
-          <div className=" relative flex flex-col sm:flex-row justify-center items-center sm:items-stretch w-full gap-y-20 sm:gap-x-20 py-10">
+          <div className="relative flex flex-col sm:flex-row justify-center items-center sm:items-stretch w-full gap-y-20 sm:gap-x-20 py-10">
             <PriceCard planeName="Free Plan" price="0" />
             <PriceCard
               planeName="Pro Plan"
               price="12.99"
               line1="billed annually"
               line2="$17 billed monthly"
-              light 
+              light
             />
           </div>
-        
         </Container>
         <Footer />
       </section>

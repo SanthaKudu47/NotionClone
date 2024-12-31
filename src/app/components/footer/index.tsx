@@ -36,7 +36,7 @@ function Footer() {
             and scrambled it to make a type specimen book.
           </div>
         </div>
-        <div className="grid grid-flow-row sm:grid-flow-col grid-cols-2 sm:grid-cols-6  sm:grid-rows-1   gap-y-4">
+        <div className="grid grid-flow-row sm:grid-flow-col grid-cols-2 sm:grid-cols-6  sm:grid-rows-1 gap-y-4">
           <FooterData />
           <FooterData />
           <FooterData />

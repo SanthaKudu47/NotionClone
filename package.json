@@ -7,10 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate":"npx drizzle-kit generate",
-    "pull":"npx drizzle-kit pull"
+    "generate": "npx drizzle-kit generate",
+    "pull": "npx drizzle-kit pull"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "^2.47.10",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.2",
     "next": "15.1.2",
