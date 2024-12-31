@@ -136,15 +136,17 @@ export default async function Home() {
           </div>
         </Container>
         <Container>
-          <div className="flex flex-col sm:flex-row justify-center items-center sm:items-stretch w-full gap-y-20 sm:gap-x-20 py-10">
+          <div className=" relative flex flex-col sm:flex-row justify-center items-center sm:items-stretch w-full gap-y-20 sm:gap-x-20 py-10">
             <PriceCard planeName="Free Plan" price="0" />
             <PriceCard
               planeName="Pro Plan"
               price="12.99"
               line1="billed annually"
               line2="$17 billed monthly"
+              light 
             />
           </div>
+        
         </Container>
         <Footer />
       </section>
