@@ -15,6 +15,7 @@ import { testimonials } from "../components/testiminailCard/data";
 import TestimonialStrip from "../components/testimonialStripe";
 import PriceCard from "../components/priceCard";
 import Footer from "../components/footer";
+import SectionMarker from "../components/sectionMarker";
 
 export default async function Home() {
   // const db = getConnectedDB();
@@ -24,7 +25,8 @@ export default async function Home() {
 
   return (
     <main>
-      <section>
+      <SectionMarker id="express" />
+      <section className="mt-[40px]">
         <Container>
           <TitleSection
             title={
@@ -64,7 +66,7 @@ export default async function Home() {
           <div className="flex flex-row justify-center">
             <AnimatedStripe />
           </div>
-
+          <SectionMarker id="features" margin={40} />
           <TitleSection
             title={
               <>
@@ -100,10 +102,11 @@ export default async function Home() {
             />
           </div>
           <div className="flex flex-row justify-end sm:justify-center items-center w-full absolute bottom-0 z-0">
-            <div className="absolute flex w-[400px] h-[30px] sm:w-[550px]  bottom-6 sm:bottom-0 sm:h-[60px] bg-[#0469FF] opacity-80 rounded-full blur-3xl z-0"/>
+            <div className="absolute flex w-[400px] h-[30px] sm:w-[550px]  bottom-6 sm:bottom-0 sm:h-[60px] bg-[#0469FF] opacity-80 rounded-full blur-3xl z-0" />
           </div>
         </div>
         <Container>
+          <SectionMarker id="testimonials" margin={-50}/>
           <TitleSection title={<>Trusted by all</>} subTitle="Get Access" />
           <div className="hidden sm:block text-neutral/neutral-9 text-center text-xs sm:text-base py-5">
             Join thousands of satisfied users who rely on our platform for their
@@ -117,6 +120,7 @@ export default async function Home() {
         </Container>
         <TestimonialStrip />
         <Container>
+          <SectionMarker id="pricing" />
           <TitleSection
             title={
               <>

@@ -2,11 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
 
 html,
 body {
   height: 100%;
-  @apply bg-brand/brand-dark
+  @apply bg-brand/brand-dark;
 }
 
 :root {
