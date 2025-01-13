@@ -1,6 +1,11 @@
 "use server";
 
-import { FormState, SignupFormSchema } from "@/lib/definitions";
+import {
+  FormState,
+  ResetFormSchema,
+  ResetFormState,
+  SignupFormSchema,
+} from "@/lib/definitions";
 import { createClient } from "../superbase/server";
 import { getConnectedDB } from "@/lib/superbase/db/db";
 import { users } from "../../../../drizzle/schema";
@@ -123,4 +128,52 @@ async function signin(formState: FormState, formData: FormData) {
   }
 }
 
-export { signup, signin };
+async function resetPassword(formState: ResetFormState, formData: FormData) {
+  console.log(formState, formData);
+  const BASEURL = process.env.BASE_URL;
+  const currentStatus = { ...formState };
+  currentStatus.errors = { ...formState?.errors };
+
+  if (!BASEURL) {
+    console.log("failed to get env variable");
+    return currentStatus;
+  }
+
+  const supabase = await createClient();
+
+  const data = {
+    email: formData.get("email") as string,
+  };
+
+  const { success, error } = ResetFormSchema.safeParse({
+    email: data.email,
+  });
+
+  if (!success) {
+    const emailErrors = error.flatten().fieldErrors.email;
+    const currentStatus = {
+      errors: {
+        email: emailErrors,
+      },
+      message: "Form Validation Error",
+    };
+
+    return currentStatus;
+  } else {
+    const email = data.email;
+    const response = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${BASEURL}/password-update`,
+    });
+
+
+    if (response.error) {
+      currentStatus.message = "Failed to send Email";
+    } else {
+      currentStatus.message = "Done";
+    }
+  }
+
+  return currentStatus;
+}
+
+export { signup, signin, resetPassword };

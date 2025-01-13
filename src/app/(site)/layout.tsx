@@ -1,6 +1,6 @@
 import Navigation from "../components/navigation";
 
-function layout({ children }: { children: React.ReactNode }) {
+function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <Navigation />
@@ -9,4 +9,4 @@ function layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default layout;
+export default Layout;

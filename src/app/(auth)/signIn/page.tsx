@@ -133,6 +133,11 @@ function LoginPage() {
               ) : (
                 ""
               ))}
+            <div className="flex justify-end px-8 py-1">
+              <Link href={"/password-reset"}>
+                <u className=" text-neutral/neutral-9">Forgot password</u>
+              </Link>
+            </div>
 
             <div className="px-5 flex justify-end text-neutral/neutral-9 pt-2 relative pb-4">
               Don't have an account ?

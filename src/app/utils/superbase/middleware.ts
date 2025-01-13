@@ -31,18 +31,72 @@ export async function updateSession(request: NextRequest) {
 
   const {
     data: { user },
+    error,
   } = await supabase.auth.getUser();
 
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/auth")
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
-    const url = request.nextUrl.clone();
-    url.pathname = "/signin";
-    return NextResponse.redirect(url);
-  }
+  let loggedIn = user ? true : false;
 
-  return supabaseResponse;
+  if (error) {
+    console.log( error.message);
+    if (
+      request.nextUrl.pathname.startsWith("/signin") ||
+      request.nextUrl.pathname.startsWith("/signup") ||
+      request.nextUrl.pathname.startsWith("/password-reset")
+    ) {
+      return supabaseResponse;
+    } else {
+      const url = request.nextUrl.clone();
+      url.pathname = "/signin";
+      return NextResponse.redirect(url);
+    }
+  } else {
+    if (loggedIn) {
+      if (
+        request.nextUrl.pathname.startsWith("/signup") ||
+        request.nextUrl.pathname.startsWith("/signin") ||
+        request.nextUrl.pathname.startsWith("/password-reset")
+      ) {
+        const url = request.nextUrl.clone();
+        url.pathname = "/dashboard";
+        return NextResponse.redirect(url);
+      } else {
+        return supabaseResponse;
+      }
+    } else {
+      if (
+        !(
+          request.nextUrl.pathname.startsWith("/signin") ||
+          request.nextUrl.pathname.startsWith("/signup")
+        )
+      ) {
+        const url = request.nextUrl.clone();
+        url.pathname = "/signin";
+        return NextResponse.redirect(url);
+      } else {
+        return supabaseResponse;
+      }
+    }
+    // if (
+    //   !user &&
+    //   !request.nextUrl.pathname.startsWith("/signup") &&
+    //   !request.nextUrl.pathname.startsWith("/signin")
+    // ) {
+    //   //no user, potentially respond by redirecting the user to the login page
+    //   const url = request.nextUrl.clone();
+    //   url.pathname = "/signin";
+    //   return NextResponse.redirect(url);
+    // } else {
+    //   console.log("we have user");
+    //   return supabaseResponse;
+    // }
+
+    // if (
+    //   (user && request.nextUrl.pathname.startsWith("signin")) ||
+    //   (user && request.nextUrl.pathname.startsWith("signup"))
+    // ) {
+    //   const url = request.nextUrl.clone();
+    //   url.pathname = "/dashboard";
+    //   return NextResponse.redirect(url);
+    // }
+  }
 }

@@ -3,6 +3,8 @@ import { drizzle, PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 
+import * as schema from "../../../../drizzle/schema";
+
 const connectionString = process.env.DATABASE_URL;
 
 function getConnectedDB() {
@@ -12,7 +14,7 @@ function getConnectedDB() {
 
   try {
     const client = postgres(connectionString, { prepare: false, max: 1 });
-    const db = drizzle({ client });
+    const db = drizzle({ client,schema:schema });
     console.log("Connected.....");
     return db;
   } catch (error) {
@@ -36,5 +38,7 @@ async function migrateUpdates(
     console.log(error);
   }
 }
+
+
 
 export { getConnectedDB, migrateUpdates };

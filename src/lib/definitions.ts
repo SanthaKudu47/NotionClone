@@ -13,11 +13,25 @@ export const SignupFormSchema = z.object({
     .trim(),
 });
 
+
+export const ResetFormSchema = z.object({
+  email:z.string().email({message:"please enter a valid email."}).trim()
+}); 
+
 export type FormState =
   | {
       errors?: {
         email?: string[];
         password?: string[];
+      };
+      message?: string;
+    }
+  | undefined;
+
+export type ResetFormState =
+  | {
+      errors?: {
+        email?: string[];
       };
       message?: string;
     }

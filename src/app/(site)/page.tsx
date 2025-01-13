@@ -60,6 +60,7 @@ export default async function Home() {
           </div>
         </Container>
         <Container>
+          <SectionMarker id="download" margin={80} />
           <div className="flex flex-row justify-center">
             <ButtonMain type="v1" />
           </div>
@@ -106,7 +107,7 @@ export default async function Home() {
           </div>
         </div>
         <Container>
-          <SectionMarker id="testimonials" margin={-50}/>
+          <SectionMarker id="testimonials" margin={-50} />
           <TitleSection title={<>Trusted by all</>} subTitle="Get Access" />
           <div className="hidden sm:block text-neutral/neutral-9 text-center text-xs sm:text-base py-5">
             Join thousands of satisfied users who rely on our platform for their

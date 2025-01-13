@@ -64,8 +64,6 @@ function SignUp() {
     setPassword(value);
   };
 
-  console.log(state);
-
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
       <div className="bg-[#211F30] w-5/6 sm:w-1/3  text-white rounded-2xl  p-[2px] flex justify-center items-center">
@@ -150,7 +148,7 @@ function SignUp() {
               <div className="px-5 flex justify-end text-neutral/neutral-9 pb-7">
                 Already have an account?
                 <span className="text-washed-purple/washed-purple-300 px-1 cursor-pointer">
-                  <Link href="./signIn">Sign In</Link>
+                  <Link href="./signin">Sign In</Link>
                 </span>
               </div>
             </div>
