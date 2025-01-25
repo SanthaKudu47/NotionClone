@@ -6,6 +6,7 @@ import Image from "next/image";
 import { createClient } from "@/app/utils/superbase/clients";
 import { GlobalContext } from "@/app/context/context";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 function ProfileModal({
   email,
@@ -47,6 +48,9 @@ function ProfileModal({
           <span className="text-washed-purple/washed-purple-500">{email}</span>
           {fullName && <span>{fullName}</span>}
           {paymentMethod && <span>{paymentMethod}</span>}
+          <span>
+            <Link href={"/dashboard"}>Dashboard</Link>
+          </span>
           <div className="flex flex-row justify-end w-full">
             <div className="inline-block" onClick={signOutHandler}>
               <ButtonMain type="v2" text="Sign Out" />

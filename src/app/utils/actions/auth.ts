@@ -165,7 +165,6 @@ async function resetPassword(formState: ResetFormState, formData: FormData) {
       redirectTo: `${BASEURL}/password-update`,
     });
 
-
     if (response.error) {
       currentStatus.message = "Failed to send Email";
     } else {
