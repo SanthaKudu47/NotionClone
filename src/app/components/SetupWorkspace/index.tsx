@@ -37,20 +37,28 @@ function SetupWorkSpace({ userId }: { userId: string }) {
     setData(dataNew);
   };
 
-  const updateEmoji = function (emoji: File|null) {
+  const updateEmoji = function (emoji: File | null) {
     const dataNew = { ...data };
     dataNew.emoji = emoji;
     setData(dataNew);
   };
 
-  const updateLogo = function (logo: File|null) {
+  const updateLogo = function (logo: File | null) {
     const dataNew = { ...data };
     dataNew.workspaceLogo = logo;
     setData(dataNew);
   };
 
   const submit = async function () {
+    setPending(true);
     const res = await createWorkspace(data);
+    if (res === null) return;
+    const { validationErrors } = res;
+    if (validationErrors) {
+      const { emoji, logo, title } = validationErrors;
+      setErrors({ emoji: emoji, title: title, workspaceLogo: logo });
+    }
+    setPending(false);
     console.log(res);
   };
 
@@ -71,6 +79,7 @@ function SetupWorkSpace({ userId }: { userId: string }) {
             <div className="w-full flex flex-col">
               <div className="flex flex-row items-end gap-x-3">
                 <EmojiPickerCmp setSelectedFile={updateEmoji} />
+
                 <div className="w-full">
                   <CustomInput
                     labelName="Name"
@@ -87,10 +96,20 @@ function SetupWorkSpace({ userId }: { userId: string }) {
                   />
                 </div>
               </div>
-
+              {errors.emoji && !isPending && (
+                <div className="text-red-600">{errors.emoji}</div>
+              )}
+              {errors.title && !isPending && (
+                <div className="text-red-600">{errors.title}</div>
+              )}
               <div>
                 <FileUploadInput setSelectedFile={updateLogo} />
               </div>
+              {errors.workspaceLogo && !isPending && (
+                <div className="text-red-600 text-[15px]">
+                  {errors.workspaceLogo}
+                </div>
+              )}
               <div className="flex flex-row w-full py-4 justify-end">
                 <div className="inline-block" onClick={submit}>
                   <ButtonMain type="v2" text="Create Workspace" />

@@ -25,8 +25,11 @@ function EmojiPickerCmp({
       const response = await fetch(url);
       if (!response.ok) return null;
       const blob = await response.blob();
-      const filename = url.substring(url.lastIndexOf("/") + 1);
-      const file = new File([blob], filename, { type: blob.type });
+      const extension = url.substring(url.lastIndexOf(".") + 1);
+      console.log(fileName);
+      const file = new File([blob], `${fileName}.${extension}`, {
+        type: blob.type,
+      });
       return file;
     } catch (error) {
       console.log("failed to create file from url");
@@ -36,7 +39,7 @@ function EmojiPickerCmp({
 
   const emojiClickHandler = async function (data: EmojiClickData) {
     console.log(data);
-    const fileName = v4();
+    const fileName = "workspace_emoji";
     const file = await createFileFromUrl(data.imageUrl, fileName);
     if (file) {
       setLoading("start");

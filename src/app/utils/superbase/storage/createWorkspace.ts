@@ -1,8 +1,15 @@
 "use server";
 
 import { Workspaces } from "@/lib/superbase/db/scema.types";
-import { createImageBucket, getBucket } from "./queries";
+import {
+  createImageBucket,
+  getBucket,
+  isBucketAvailable,
+  uploadFile,
+} from "./queries";
 import { emit } from "process";
+import { createWorkspaceForUser } from "@/lib/superbase/db/queries";
+import { createClient } from "../server";
 
 export type workspaceInitDataType = {
   title: string | null;
@@ -27,6 +34,7 @@ type ValidationErrors = {
 async function createWorkspace(data: workspaceInitDataType) {
   const BUCKET_NAME = "workspace_meta";
   //validation
+
   const validationErrors: ValidationErrors = {
     title: null,
     logo: null,
@@ -96,35 +104,67 @@ async function createWorkspace(data: workspaceInitDataType) {
     return returnData;
   }
 
-  //empty string check
-
-  //ok to proceed
-
-  //generate errors based on validation
-
-  console.log(typeof data.emoji);
-
-  console.log("Inside");
-  console.log(data);
-  return null;
-
-  //validation
-  //check for bucket
-  //create new if not created yet
-  //upload files //get urls
-  //update table usingDrizzle
-  const workspaceMetaBucket = await getBucket(BUCKET_NAME); //[{workspaceEmoji:[],}]
-  if (!workspaceMetaBucket) {
-    const bucketName = await createImageBucket(BUCKET_NAME, true);
-    if (!bucketName) {
-      console.log("Failed to Create Image Bucket");
-      return null;
-    }
+  const bucketAvailable = await isBucketAvailable(BUCKET_NAME);
+  console.log("++++>", bucketAvailable);
+  let bucketName: string | null = BUCKET_NAME;
+  if (bucketAvailable === false) {
+    bucketName = await createImageBucket(BUCKET_NAME, true);
   }
-  //have a bucket
-  //upload emoji
 
-  // const res = super
+  if (bucketName === null) {
+    returnData.ok = false;
+    returnData.message = "Failed to create bucket on superbase!";
+    return returnData;
+  }
+
+  //image bucket available
+
+  if (!data.emoji) {
+    returnData.ok = false;
+    returnData.message = "Validation Error on emoji field";
+    return returnData;
+  }
+
+  if (!data.workspaceLogo) {
+    returnData.ok = false;
+    returnData.message = "Validation Error on Logo field";
+    return returnData;
+  }
+
+  const fullFilePathOfEmoji = await uploadFile(
+    data.emoji,
+    BUCKET_NAME,
+    data.emoji.name
+  );
+
+  const fullFilePathOfLogo = await uploadFile(
+    data.workspaceLogo,
+    BUCKET_NAME,
+    `workspace_logo${data.workspaceLogo.name.substring(
+      data.workspaceLogo.name.lastIndexOf(".")
+    )}`
+  );
+
+  if (!fullFilePathOfEmoji || !fullFilePathOfLogo) {
+    returnData.ok = false;
+    returnData.message = "Failed to upload file";
+    return returnData;
+  }
+
+  //get urls and update database
+
+  //
+
+  const res = await createWorkspaceForUser(
+    fullFilePathOfEmoji,
+    fullFilePathOfLogo,
+    data.title ? data.title : ""
+  );
+
+  returnData.ok = true;
+  returnData.data = { emoji: fullFilePathOfEmoji, logo: fullFilePathOfLogo };
+  returnData.message = "Successfully file uploaded";
+  return returnData;
 }
 
 export { createWorkspace };
